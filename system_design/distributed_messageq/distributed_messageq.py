@@ -1,11 +1,10 @@
 from system_design.utils.consistent_hash import ConsistentHash
 from system_design.utils.node import *
-
+import random
 
 class DistributedMessageQueue:
     def __init__(self, nodes, queue_name):
         self.nodes = nodes
-        self.virtual_nodes = set()
         self.queue_name = queue_name
         self.hasher = ConsistentHash(nodes)
         self.queues = {}
@@ -17,14 +16,15 @@ class DistributedMessageQueue:
 
     def put(self, message):
         virtual_node, node = self.hasher.get_node(message)
-        self.virtual_nodes.add(virtual_node)
         queue = self._get_queue(virtual_node)
         queue.append(message)
 
     def get(self):
-        # print(self.queues)
-        for virtual_node in self.virtual_nodes:
-            queue = self.queues[virtual_node]
+        random_nodes = list(self.queues.keys())
+        random.shuffle(random_nodes)
+
+        for node in random_nodes:
+            queue = self.queues[node]
             if queue:
                 return queue.pop(0)
         return None
