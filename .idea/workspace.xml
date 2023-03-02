@@ -2,37 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f463348a-e880-42eb-9ba8-48c57ff1aca0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/trees/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/leetCode.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/leetCode.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/design/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/design/chat/client.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/design/chat/failOverServer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/design/chat/failOverServer2.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/design/chat/failoverClient.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/design/chat/server.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/design/heartbeat/client.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/design/heartbeat/receiver.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/design/heartbeat/sender.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/design/heartbeat/server.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tree/binary_tree_inorder_traversal.py" beforeDir="false" afterPath="$PROJECT_DIR$/trees/binary_tree_inorder_traversal.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tree/binary_tree_level_order_traversal2.py" beforeDir="false" afterPath="$PROJECT_DIR$/trees/binary_tree_level_order_traversal2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tree/binary_tree_postorder_traversal.py" beforeDir="false" afterPath="$PROJECT_DIR$/trees/binary_tree_postorder_traversal.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tree/binary_tree_preorder_traversal.py" beforeDir="false" afterPath="$PROJECT_DIR$/trees/binary_tree_preorder_traversal.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tree/bst_iterator.py" beforeDir="false" afterPath="$PROJECT_DIR$/trees/bst_iterator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tree/converted_sorted_list_to_bst.py" beforeDir="false" afterPath="$PROJECT_DIR$/trees/converted_sorted_list_to_bst.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tree/flatten_bt_to_linkedlist.py" beforeDir="false" afterPath="$PROJECT_DIR$/trees/flatten_bt_to_linkedlist.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tree/path_sum3.py" beforeDir="false" afterPath="$PROJECT_DIR$/trees/path_sum3.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tree/populating_next_right_pointers_in_each_node.py" beforeDir="false" afterPath="$PROJECT_DIR$/trees/populating_next_right_pointers_in_each_node.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tree/populating_next_right_pointers_in_each_node_2.py" beforeDir="false" afterPath="$PROJECT_DIR$/trees/populating_next_right_pointers_in_each_node_2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tree/recover_binary_search_tree.py" beforeDir="false" afterPath="$PROJECT_DIR$/trees/recover_binary_search_tree.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tree/same_tree.py" beforeDir="false" afterPath="$PROJECT_DIR$/trees/same_tree.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tree/serialize_deserialize_bst.py" beforeDir="false" afterPath="$PROJECT_DIR$/trees/serialize_deserialize_bst.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tree/unique_binary_search_tree.py" beforeDir="false" afterPath="$PROJECT_DIR$/trees/unique_binary_search_tree.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tree/unique_binary_search_tree2.py" beforeDir="false" afterPath="$PROJECT_DIR$/trees/unique_binary_search_tree2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tree/validate_binary_search_tree.py" beforeDir="false" afterPath="$PROJECT_DIR$/trees/validate_binary_search_tree.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tree/verify_preorder_serialization_of_bt.py" beforeDir="false" afterPath="$PROJECT_DIR$/trees/verify_preorder_serialization_of_bt.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -44,7 +14,7 @@
     <splitter split-orientation="horizontal" split-proportion="0.5">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/system_design/distributed_messageq/distributed_messageq.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="702">
@@ -52,6 +22,15 @@
                   <folding>
                     <element signature="e#0#42#0" expanded="true" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/.gitignore">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="27">
+                  <caret line="1" column="6" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
                 </state>
               </provider>
             </entry>
@@ -175,6 +154,7 @@
         <option value="$PROJECT_DIR$/__init__.py" />
         <option value="$PROJECT_DIR$/design/distributed_messageq/distributed_messageq.py" />
         <option value="$PROJECT_DIR$/system_design/distributed_messageq/distributed_messageq.py" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -220,11 +200,6 @@
               <item name="leetCode" type="462c0819:PsiDirectoryNode" />
               <item name="system_design" type="462c0819:PsiDirectoryNode" />
               <item name="heartbeat" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="leetCode" type="b2602c69:ProjectViewProjectNode" />
-              <item name="leetCode" type="462c0819:PsiDirectoryNode" />
-              <item name="trees" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -387,12 +362,12 @@
     <frame x="-8" y="-8" width="2514" height="1456" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20476575" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20476575" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3290469" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3290469" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3290469" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39984882" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -806,6 +781,13 @@
           <folding>
             <element signature="e#0#42#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="27">
+          <caret line="1" column="6" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
         </state>
       </provider>
     </entry>
