@@ -1,6 +1,6 @@
 # Given an integer n, return the number of structurally unique BST's (binary search trees) which has exactly n nodes of unique values from 1 to n.
 
-# Definition for a binary tree node.
+# Definition for a binary trees node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
 #         self.val = val

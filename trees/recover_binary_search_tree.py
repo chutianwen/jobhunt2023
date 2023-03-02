@@ -2,7 +2,7 @@
 # Output: [3,1,null,null,2]
 # Explanation: 3 cannot be a left child of 1 because 3 > 1. Swapping 1 and 3 makes the BST valid.
 
-# Definition for a binary tree node.
+# Definition for a binary trees node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
 #         self.val = val

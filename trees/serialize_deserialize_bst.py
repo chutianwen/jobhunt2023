@@ -1,10 +1,10 @@
 # Serialization is the process of converting a data structure or object into a sequence of bits so that it can be stored in a file or memory buffer, or transmitted across a network connection link to be reconstructed later in the same or another computer environment.
 #
-# Design an algorithm to serialize and deserialize a binary tree. There is no restriction on how your serialization/deserialization algorithm should work. You just need to ensure that a binary tree can be serialized to a string and this string can be deserialized to the original tree structure.
+# Design an algorithm to serialize and deserialize a binary trees. There is no restriction on how your serialization/deserialization algorithm should work. You just need to ensure that a binary trees can be serialized to a string and this string can be deserialized to the original trees structure.
 #
-# Clarification: The input/output format is the same as how LeetCode serializes a binary tree. You do not necessarily need to follow this format, so please be creative and come up with different approaches yourself.
+# Clarification: The input/output format is the same as how LeetCode serializes a binary trees. You do not necessarily need to follow this format, so please be creative and come up with different approaches yourself.
 
-# Definition for a binary tree node.
+# Definition for a binary trees node.
 # class TreeNode(object):
 #     def __init__(self, x):
 #         self.val = x
@@ -17,7 +17,7 @@ class Codec:
     null = '#'
 
     def serialize(self, root):
-        """Encodes a tree to a single string.
+        """Encodes a trees to a single string.
 
         :type root: TreeNode
         :rtype: str
@@ -41,7 +41,7 @@ class Codec:
         return res
 
     def deserialize(self, data):
-        """Decodes your encoded data to tree.
+        """Decodes your encoded data to trees.
 
         :type data: str
         :rtype: TreeNode

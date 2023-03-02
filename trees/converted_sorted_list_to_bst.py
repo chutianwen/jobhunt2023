@@ -1,13 +1,13 @@
 # Given the head of a singly linked list where elements are sorted in ascending order, convert it to a height balanced BST.
 #
-# For this problem, a height-balanced binary tree is defined as a binary tree in which the depth of the two subtrees of every node never differ by more than 1.
+# For this problem, a height-balanced binary trees is defined as a binary trees in which the depth of the two subtrees of every node never differ by more than 1.
 
 # Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
-# Definition for a binary tree node.
+# Definition for a binary trees node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
 #         self.val = val
