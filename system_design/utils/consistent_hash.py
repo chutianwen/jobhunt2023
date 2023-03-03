@@ -33,9 +33,10 @@ class ConsistentHash:
                 else:
                     self.node_to_replicas[primary_virtual_node].append(replica_virtual_node)
                     remaing_replica -= 1
-        print(f'Number of keys: {len(self.keys)}')
-        print(f'Hash Ring: {self.ring}')
-        print(self.node_to_replicas)
+
+        # print(f'Number of keys: {len(self.keys)}')
+        #         # print(f'Hash Ring: {self.ring}')
+        #         # print(self.node_to_replicas)
 
     def _get_num_virtual_nodes(self, node: Node):
         size = node.size

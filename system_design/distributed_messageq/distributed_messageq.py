@@ -44,6 +44,7 @@ if __name__ == '__main__':
         Node('node1', LARGE_SIZE),
         Node('node2', MEDIUM_SIZE),
         Node('node3', SMALL_SIZE)]
+
     queue_name = 'requests'
     queue = DistributedMessageQueue(nodes, queue_name)
 
