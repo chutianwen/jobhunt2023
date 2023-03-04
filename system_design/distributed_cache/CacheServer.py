@@ -1,6 +1,9 @@
-import socket
-import pickle
 from functools import lru_cache
+import pickle
+import socket
+import sys
+import threading
+import time
 
 
 BUFSIZE = 1024
@@ -9,11 +12,50 @@ SERVER_PORT = 8888
 
 
 class CacheServer:
-    def __init__(self, host, port, max_size=1024):
-        self.host = host
-        self.port = port
+    def __init__(self, coordinator_host, coordinator_port, max_size=1024):
+        self.coordinator_host = coordinator_host
+        self.coordinator_port = int(coordinator_port)
+        self.coordinator_address = (self.coordinator_host, self.coordinator_port)
+        self.socket_coordinator = None
         self.max_size = max_size
         self.cache = {}
+        self.connect_to_coordinator()
+
+    def connect_to_coordinator(self):
+        self.socket_coordinator = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        try:
+            self.socket_coordinator.connect(self.coordinator_address)
+            self.socket_coordinator.send(f'JOIN cache server\n'.encode('utf-8'))
+            print(f'Connected to {self.coordinator_address}')
+
+            # Start a separate thread to listen for server pings
+            ping_thread = threading.Thread(target=self._heart_beat)
+            # ping_thread.daemon = True
+            ping_thread.start()
+
+        except ConnectionResetError:
+            print(f'Failed to connect to {self.coordinator_address}')
+            # self.connect_to_coordinator()
+
+    def _heart_beat(self):
+        while True:
+            try:
+                self.socket_coordinator.send(b'PING\n')
+                time.sleep(35)
+            except socket.timeout:
+                print(f"Coordinator server timed out, reconnect")
+                # self.connect_to_coordinator()
+                break
+
+            except ConnectionResetError:
+                print(f"Coordinator server reset error, reconnect")
+                # self.connect_to_coordinator()
+                break
+
+            except OSError:
+                print(f"Coordinator server closed connection, reconnect")
+                # self.connect_to_coordinator()
+                break
 
     @lru_cache(maxsize=None)
     def set(self, key, value):
@@ -54,6 +96,10 @@ class CacheServer:
 
 
 if __name__ == '__main__':
+    if len(sys.argv) < 2:
+        print("Usage: python client.py <name>")
+        sys.exit(1)
+
     # Instantiate a CacheServer object with capacity of 100 and LRU eviction policy
-    server = CacheServer(host=SERVER_HOST, port=SERVER_PORT)
-    server.start()
+    server = CacheServer(coordinator_host=SERVER_HOST, coordinator_port=sys.argv[1])
+    # server.start()

@@ -23,20 +23,23 @@ class ConsistentHash:
 
             remaing_replica = self.replicas
             cur_idx = idx
-            while remaing_replica > 0:
-                # Clock wise pick replica nodes, given self.keys is sorted
-                cur_idx += 1
-                replica_node_idx = cur_idx % len(self.keys)
-                replica_virtual_node, replica_node = self.ring[self.keys[replica_node_idx]]
-                if replica_node == primary_node:
-                    continue
-                else:
-                    self.node_to_replicas[primary_virtual_node].append(replica_virtual_node)
-                    remaing_replica -= 1
+
+            # Replica only enabled when having more than number of replica node
+            if len(nodes) > self.replicas:
+                while remaing_replica > 0:
+                    # Clock wise pick replica nodes, given self.keys is sorted
+                    cur_idx += 1
+                    replica_node_idx = cur_idx % len(self.keys)
+                    replica_virtual_node, replica_node = self.ring[self.keys[replica_node_idx]]
+                    if replica_node == primary_node:
+                        continue
+                    else:
+                        self.node_to_replicas[primary_virtual_node].append(replica_virtual_node)
+                        remaing_replica -= 1
 
         # print(f'Number of keys: {len(self.keys)}')
-        #         # print(f'Hash Ring: {self.ring}')
-        #         # print(self.node_to_replicas)
+        # print(f'Hash Ring: {self.ring}')
+        # print(self.node_to_replicas)
 
     def _get_num_virtual_nodes(self, node: Node):
         size = node.size
