@@ -10,10 +10,12 @@ import threading
 import time
 
 BUFSIZE = 1024
-MESSAGE_SPLITTER = '\n'
+MESSAGE_SPLITTER = b'\n'
 SERVER_HOST = 'localhost'
 SERVER_PORT = 8888
-HEART_BEAT_TIMEOUT = 30
+HEART_BEAT_TIMEOUT = 150
+REPORT_STATUS_TIMEOUT = 60
+
 
 class CacheCoordinator:
     '''
@@ -76,19 +78,22 @@ class CacheCoordinator:
 
             print(f"Incoming data: {data}")
 
-            messages = data.decode('utf-8').strip().split(MESSAGE_SPLITTER)
+            messages = data.rstrip(MESSAGE_SPLITTER).split(MESSAGE_SPLITTER)
 
             for message in messages:
                 print(f'message: {message}')
-                if message == 'PING':
+                if message == b'PING':
                     print(f'Heartbeat from {client_socket}')
                     pre_heart_beat_time = cur_time_seconds
-                    client_socket.sendall(b'PONG')
-                elif message == 'JOIN cache client':
+                    client_socket.sendall(b'PONG' + MESSAGE_SPLITTER)
+                elif message == b'JOIN cache client':
                     print(f'Join a cache client from: {client_address}')
                     self.cache_clients.add(client_socket)
-
-                elif message == 'JOIN cache server':
+                    if self.consistent_hash:
+                        print(f'Push consistent hash ring to: {client_address}')
+                        message = bytes(b'map:') + pickle.dumps(self.consistent_hash) + MESSAGE_SPLITTER
+                        client_socket.sendall(message)
+                elif message == b'JOIN cache server':
                     print(f'Join a cache server from: {client_address}')
                     if client_socket not in self.cache_servers:
                         self.cache_servers[client_socket] = Node(id=f"{client_host}:{client_port}", size=SMALL_SIZE)
@@ -119,7 +124,8 @@ class CacheCoordinator:
                 print('\n'*2)
                 for cache_client in self.cache_clients:
                     print(f'Push updated consistent hash map to cache_client: {cache_client}')
-                    cache_client.sendall(pickle.dumps(self.consistent_hash))
+                    message = bytes(b'map:') + pickle.dumps(self.consistent_hash) + MESSAGE_SPLITTER
+                    cache_client.sendall(message)
 
                 self.consistent_hash_pre = self.consistent_hash
 
@@ -132,8 +138,10 @@ class CacheCoordinator:
             print(f'Current connected cache client: {self.cache_clients}')
             print(f'Current connected cache servers: {self.cache_servers}')
             print(f'Current consistent hash: {self.consistent_hash}')
+            print(f'Current consistent hash after pickle: {pickle.dumps(self.consistent_hash)}')
+
             print(f'==========End report==========')
-            time.sleep(15)
+            time.sleep(REPORT_STATUS_TIMEOUT)
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
