@@ -6,6 +6,10 @@ import random
 
 
 class ShardedCounter:
+    '''
+    Speed up the write process with the tradeOff on read time. Requests of same key on each shard
+    still need a synchronized lock to solve racing condition.
+    '''
 
     def __init__(self, nodes):
         '''
@@ -34,7 +38,7 @@ class ShardedCounter:
             count += self.shard_counters[node][key]
         return count
 
-
+ 
 def test_single_user(counter):
     # increment some counts
     counter.incr('apple')
