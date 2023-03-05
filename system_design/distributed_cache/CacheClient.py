@@ -117,6 +117,8 @@ class CacheClient:
                 # self.connect_to_coordinator()
                 break
 
+        coordinator_socket.close()
+
     def _get_cache_server_socket(self, key):
         cache_server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -150,7 +152,7 @@ class CacheClient:
         while True:
             print('\n'*2)
             print(f'==========Report status==========')
-            print(f'Current consistent hash ring: {self.consistent_hash}')
+            print(f'Current consistent hash ring: {self.consistent_hash.ring if self.consistent_hash else None}')
             print(f'==========End report==========')
             time.sleep(REPORT_STATUS_TIMEOUT)
 

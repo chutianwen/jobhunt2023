@@ -4,14 +4,8 @@ import socket
 import sys
 import threading
 import time
-
-
-BUFSIZE = 1024
-SERVER_HOST = 'localhost'
-SERVER_PORT = 8888
-
-HEART_BEAT_TIME_GAP = 60
-REPORT_STATUS_TIMEOUT = 60
+sys.path.append('../..')
+from system_design.distributed_cache.common import *
 
 
 class CacheServer:
@@ -21,29 +15,27 @@ class CacheServer:
         self.coordinator_address = (self.coordinator_host, self.coordinator_port)
 
         # hydrated during connect_to_coordinator
-        self.socket_coordinator = None
+        self.coordinator_socket = None
         self.cache_server_host = None
         self.cache_server_port = None
 
         self.max_size = max_size
         self.cache = {}
-        self.connect_to_coordinator()
+        self._connect_coordinator()
+        self._start_monitor()
 
-        report_status_thread = threading.Thread(target=self._report_status)
-        report_status_thread.daemon = True
-        report_status_thread.start()
-
-    def connect_to_coordinator(self):
-        self.socket_coordinator = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    def _connect_coordinator(self):
+        self.coordinator_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
-            self.socket_coordinator.connect(self.coordinator_address)
-            self.cache_server_host, self.cache_server_port = self.socket_coordinator.getsockname()
+            self.coordinator_socket.connect(self.coordinator_address)
+            self.cache_server_host, self.cache_server_port = self.coordinator_socket.getsockname()
 
-            self.socket_coordinator.send(f'JOIN cache server\n'.encode('utf-8'))
+            self.coordinator_socket.send(f'JOIN cache server\n'.encode('utf-8'))
             print(f'Connected to {self.coordinator_address}')
 
             # Start a separate thread to listen for server pings
-            ping_thread = threading.Thread(target=self._heart_beat)
+            ping_thread = threading.Thread(target=self._heart_beat,
+                                           args=(self.coordinator_socket,))
             ping_thread.daemon = True
             ping_thread.start()
 
@@ -51,10 +43,15 @@ class CacheServer:
             print(f'Failed to connect to {self.coordinator_address}')
             # self.connect_to_coordinator()
 
-    def _heart_beat(self):
+    def _start_monitor(self):
+        report_status_thread = threading.Thread(target=self._report_status)
+        report_status_thread.daemon = True
+        report_status_thread.start()
+
+    def _heart_beat(self, coordinator_socket):
         while True:
             try:
-                self.socket_coordinator.send(b'PING\n')
+                coordinator_socket.send(b'PING' + MESSAGE_SPLITTER)
                 time.sleep(HEART_BEAT_TIME_GAP)
             except socket.timeout:
                 print(f"Coordinator server timed out, reconnect")
@@ -70,6 +67,8 @@ class CacheServer:
                 print(f"Coordinator server closed connection, reconnect")
                 # self.connect_to_coordinator()
                 break
+
+        coordinator_socket.close()
 
     @lru_cache(maxsize=None)
     def set(self, key, value):
