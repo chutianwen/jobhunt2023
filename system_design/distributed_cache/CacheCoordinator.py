@@ -1,20 +1,12 @@
-import sys
-
-sys.path.append('../..')
-
-from system_design.utils.consistent_hash import ConsistentHash
-from system_design.utils.node import Node, SMALL_SIZE
 import pickle
 import socket
 import threading
 import time
-
-BUFSIZE = 1024
-MESSAGE_SPLITTER = b'\n'
-SERVER_HOST = 'localhost'
-SERVER_PORT = 8888
-HEART_BEAT_TIMEOUT = 150
-REPORT_STATUS_TIMEOUT = 60
+import sys
+sys.path.append('../..')
+from system_design.distributed_cache.common import *
+from system_design.utils.consistent_hash import ConsistentHash
+from system_design.utils.node import Node, SMALL_SIZE
 
 
 class CacheCoordinator:
@@ -67,7 +59,7 @@ class CacheCoordinator:
                 break
 
             try:
-                data = client_socket.recv(BUFSIZE)
+                data = client_socket.recv(BUFFER_SIZE)
             except ConnectionResetError:
                 print("Connection closed by client")
                 break
@@ -138,8 +130,7 @@ class CacheCoordinator:
             print(f'Current connected cache client: {self.cache_clients}')
             print(f'Current connected cache servers: {self.cache_servers}')
             print(f'Current consistent hash: {self.consistent_hash}')
-            print(f'Current consistent hash after pickle: {pickle.dumps(self.consistent_hash)}')
-
+            # print(f'Current consistent hash after pickle: {pickle.dumps(self.consistent_hash)}')
             print(f'==========End report==========')
             time.sleep(REPORT_STATUS_TIMEOUT)
 

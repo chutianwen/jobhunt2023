@@ -33,7 +33,6 @@ class CacheServer:
         report_status_thread.daemon = True
         report_status_thread.start()
 
-
     def connect_to_coordinator(self):
         self.socket_coordinator = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
