@@ -15,3 +15,7 @@ NODE_ID_SPLITTER = ':'
 GET_MESSAGE = 'GET'
 SET_MESSAGE = 'SET'
 
+
+a = [1,2,3]
+for idx, x in enumerate(a):
+    a[idx] += 1
