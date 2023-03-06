@@ -156,6 +156,7 @@ class CacheClient:
             print(f'==========End report==========')
             time.sleep(REPORT_STATUS_TIMEOUT)
 
+
 if __name__ == '__main__':
 
     if len(sys.argv) < 2:
