@@ -11,7 +11,7 @@ class Solution:
     In such problems, we cannot just think of nodes as stops like A, B, C. Even at the same location say B, it will take
     different cost to neighbor like C, depending an what bus is currently taking.
     For graph problems like this, the edge cost/distance is not static or fixed, it is a function of current node state
-    and the edge property (which bus to take next).
+    and the edge property (which bus to take next). We need to come up with some
 
     For building graph, one way is graph[src][dst] = set(path), another way is graph[src][path] = dst
 
