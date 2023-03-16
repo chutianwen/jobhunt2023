@@ -3,6 +3,12 @@ from collections import defaultdict
 
 
 class Solution:
+    '''
+    Here is finding shortest path with a condition on path capping.
+    So we need to consider the less optimal path with shorter jumps.
+    So model the state by only location is not enough, we should consider adding more fields to the
+    state like number of jumps so far.
+    '''
     def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
 
         # total_price, total_stops, location
