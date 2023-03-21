@@ -8,6 +8,7 @@ class Solution:
 
         res = []
         for idx, num in enumerate(nums):
+            # like insertion sort, but only kept the entries larger than current num
             while buffer and buffer[-1] < num:
                 buffer.pop()
 
