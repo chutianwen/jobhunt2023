@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Posts</title>
+</head>
+<body>
+    <h1>My Posts</h1>
+    <form method="POST" action="/post">
+        <label for="post_content">Create Post:</label>
+        <input type="text" name="post_content" id="post_content">
+        <button type="submit">Submit</button>
+    </form>
+    <hr>
+    <div id="posts"></div>
+
+    <script>
+        function getPosts() {
+            fetch('/posts')
+                .then(response => response.json())
+                .then(posts => {
+                    let postsHtml = '';
+                    for (let post of posts) {
+                        postsHtml += `
+                            <div>
+                                <p>${post.content}</p>
+                                <button class="like-button" data-post-id="${post.id}">Like</button>
+                                <span class="like-count">${post.likes}</span>
+                            </div>
+                            <hr>
+                        `;
+                    }
+                    document.querySelector('#posts').innerHTML = postsHtml;
+
+                    // add event listener to like button
+                    let likeButtons = document.querySelectorAll('.like-button');
+                    for (let button of likeButtons) {
+                        button.addEventListener('click', function() {
+                            let postId = button.getAttribute('data-post-id');
+                            fetch(`/like/${postId}`, { method: 'POST' })
+                                .then(response => response.json())
+                                .then(post => {
+                                    let likeCountSpan = button.nextElementSibling;
+                                    likeCountSpan.innerHTML = post.likes;
+                                });
+                        });
+                    }
+                });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            getPosts();
+        });
+    </script>
+</body>
+</html>

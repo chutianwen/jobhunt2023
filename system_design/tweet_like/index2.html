@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Post System</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Create Post</h1>
+    <form>
+        <input type="text" id="post-text">
+        <button type="button" onclick="createPost()">Post</button>
+    </form>
+    <h1>Posts</h1>
+    <ul id="post-list"></ul>
+    <script>
+        function createPost() {
+            var postText = $('#post-text').val();
+            $.post('/post', {text: postText}, function(data) {
+                getPosts();
+            });
+        }
+
+        function likePost(postId) {
+            $.post('/like', {id: postId}, function(data) {
+                getPosts();
+            });
+        }
+
+        function getPosts() {
+            $.get('/posts', function(data) {
+                $('#post-list').empty();
+                for (var i = 0; i < data.length; i++) {
+                    var post = data[i];
+                    var postItem = $('<li>').text(post.text);
+                    var likeButton = $('<button>').text('Like');
+                    likeButton.click((function(postId) {
+                        return function() {
+                            likePost(postId);
+                        };
+                    })(post.id));
+                    var likeCount = $('<span>').text(' ' + post.likes);
+                    postItem.append(likeButton).append(likeCount);
+                    $('#post-list').append(postItem);
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            getPosts();
+        });
+    </script>
+</body>
+</html>

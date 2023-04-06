@@ -1,5 +1,5 @@
 class Solution:
-    def canJump(self, nums: List[int]) -> bool:
+    def canJump(self, nums) -> bool:
 
         if not nums or len(nums) == 1:
             return True
@@ -15,3 +15,16 @@ class Solution:
             if max_jumps_budget == 0 and idx < end - 1:
                 return False
         return True
+
+
+a = 1
+b = []
+def fun():
+    a = 2
+    a += 1
+    b.append(a)
+    return a
+
+print(fun())
+print(a)
+print(b)
