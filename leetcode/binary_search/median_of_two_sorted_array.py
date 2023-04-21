@@ -1,51 +1,42 @@
 class Solution:
     def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
 
-        size_1 = len(nums1)
-        size_2 = len(nums2)
-
-        if size_1 < size_2:
-            small, large = nums1, nums2
-            small_len, large_len = size_1, size_2
+        if len(nums1) <= len(nums2):
+            shorter, longer, shorter_len, longer_len = nums1, nums2, len(nums1), len(nums2)
         else:
-            small, large = nums2, nums1
-            small_len, large_len = size_2, size_1
+            shorter, longer, shorter_len, longer_len = nums2, nums1, len(nums2), len(nums1)
 
-        # number of entries till the first median candidate
-        mid_len = (small_len + large_len + 1) // 2
-        # we are tracking the range of larger candidate for small nums
-        lo = 0
-        hi = small_len
+        # first candidate index, 1 based (3, 4) => 4, (4, 4) => (4, 5)
+        mid_length = (shorter_len + longer_len + 1) // 2
 
-        print(small, large, small_len, large_len)
+        # range of number of used elements from shorter, use nothing or use all
+        lo, hi = 0, shorter_len
+
         while lo <= hi:
-            ## Candidates fall into small[small_mid - 1], small[mid], large[mid], large[mid - 1]
-            # pointer to larger candidate from small nums
-            small_mid = (lo + hi) // 2
-            # pointer to the larger candidate from large nums
-            large_mid = mid_len - small_mid
+            # how many short values used
+            short_used_len = lo + (hi - lo) // 2
+            long_used_len = mid_length - short_used_len
 
-            if small_mid > 0 and small[small_mid - 1] > large[large_mid]:
-                hi = small_mid - 1
-            elif small_mid < small_len and small[small_mid] < large[large_mid - 1]:
-                lo = small_mid + 1
+            # compare short_mid - 1, and long_mid - 1
+            if short_used_len >= 1 and shorter[short_used_len - 1] > longer[long_used_len]:
+                hi = short_used_len - 1
+            elif short_used_len < shorter_len and shorter[short_used_len] < longer[long_used_len - 1]:
+                lo = short_used_len + 1
             else:
-                # exhaust small nums
-                if small_mid == 0:
-                    max_left = large[large_mid - 1]
-                elif large_mid == 0:
-                    max_left = small[small_mid - 1]
+                if short_used_len == 0:
+                    max_left = longer[long_used_len - 1]
+                elif long_used_len == 0:
+                    max_left = shorter[short_used_len - 1]
                 else:
-                    max_left = max(small[small_mid - 1], large[large_mid - 1])
+                    max_left = max(shorter[short_used_len - 1], longer[long_used_len - 1])
 
-                if (small_len + large_len) & 1:
+                if (shorter_len + longer_len) & 1:
                     return max_left
 
-                if small_mid == small_len:
-                    min_right = large[large_mid]
-                elif large_mid == large_len:
-                    min_right = small[small_mid]
+                if short_used_len == shorter_len:
+                    min_right = longer[long_used_len]
+                elif long_used_len == longer_len:
+                    min_right = shorter[short_used_len]
                 else:
-                    min_right = min(small[small_mid], large[large_mid])
-
+                    min_right = min(shorter[short_used_len], longer[long_used_len])
                 return (max_left + min_right) / 2

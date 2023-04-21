@@ -5,6 +5,37 @@
 #         self.next = next
 class Solution:
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        remaining = 0
+
+        p1, p2 = l1, l2
+
+        while p1 and p2:
+            cur_sum = p1.val + p2.val + remaining
+
+            p1.val = cur_sum % 10
+            remaining = cur_sum // 10
+
+            if not p1.next or not p2.next:
+                break
+            p1 = p1.next
+            p2 = p2.next
+
+        if p1.next is None:
+            p1.next = p2.next
+
+        while p1.next:
+            cur_sum = p1.next.val + remaining
+            p1.next.val = cur_sum % 10
+            remaining = cur_sum // 10
+            p1 = p1.next
+
+        if remaining != 0:
+            p1.next = ListNode(remaining)
+
+        return l1
+
+class Solution2:
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
         if not l1 or not l2:
             return 1 or l2
 
