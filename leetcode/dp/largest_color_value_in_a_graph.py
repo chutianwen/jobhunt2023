@@ -2,6 +2,58 @@ from collections import Counter, defaultdict
 
 from collections import defaultdict, Counter
 
+from collections import deque, defaultdict, Counter
+
+
+class TopDownSolution:
+    def largestPathValue(self, colors: str, edges: List[List[int]]) -> int:
+
+        node_indegree_map = defaultdict(list)
+        node_out_degree_map = defaultdict(list)
+        for src, dst in edges:
+            node_out_degree_map[src].append(dst)
+            node_indegree_map[dst].append(src)
+
+        # nodes with zero indegree, root nodes
+        frontier = deque([node for node in range(len(colors)) if node not in node_indegree_map])
+
+        # maintain a counter recording state calculating from root to current node
+        node_color_value_map = defaultdict(Counter)
+
+        explored = 0
+        largest_color, largest_color_value = None, None
+
+        while frontier:
+            cur_node = frontier.popleft()
+            node_color_value_map[cur_node][colors[cur_node]] += 1
+
+            explored += 1
+            is_leaf = True
+            for next_node in node_out_degree_map.get(cur_node, []):
+                for color, color_cnt in node_color_value_map.get(cur_node, Counter()).items():
+                    node_color_value_map[next_node][color] = max(node_color_value_map[next_node][color], color_cnt)
+
+                node_indegree_map[next_node].remove(cur_node)
+                if len(node_indegree_map[next_node]) == 0:
+                    frontier.append(next_node)
+                is_leaf = False
+
+            # print(cur_node, is_leaf, node_color_value_map[cur_node])
+
+            if is_leaf:
+                cur_largest_color, cur_largest_color_value = \
+                node_color_value_map.get(cur_node, Counter()).most_common()[0]
+                if largest_color_value is None or largest_color_value < cur_largest_color_value:
+                    largest_color, largest_color_value = cur_largest_color, cur_largest_color_value
+
+        if explored < len(colors):
+            return -1
+        else:
+            return largest_color_value
+
+        # from top to bottom, expand frontier of nodes having 0 indegree
+
+
 
 class Solution:
     def largestPathValue(self, colors: str, edges: List[List[int]]) -> int:
