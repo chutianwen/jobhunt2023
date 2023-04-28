@@ -23,8 +23,13 @@ class FeatureStore
         self.stats = dict()
         self.logger = Logger()
 
+    def _build_dag(self):
+        # build among features, based on their dependency
+        return dag
+
     def get_data_record(self):
         data_record = defaultdict(FeatureValue)
+
         for feature in self.features:
             try:
                 data_record[feature.id] = feature.compute()
@@ -33,6 +38,7 @@ class FeatureStore
                 self.stats['fail'] += 1
                 self.logger.warn(e)
 
+        return data_record
 
 # in production
 def get_data_record(user, tweet):

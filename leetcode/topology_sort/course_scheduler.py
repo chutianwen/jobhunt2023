@@ -73,6 +73,39 @@ class TopDownSolution:
             return []
 
 
+from collections import defaultdict, deque
+
+
+class BotUpSolution2:
+    def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+
+        # build a graph
+        graph = defaultdict(set)
+        node_parent_map = defaultdict(set)
+        for child, parent in prerequisites:
+            graph[parent].add(child)
+            node_parent_map[child].add(parent)
+
+        # from bot up, leaves
+        q = deque([node for node in range(numCourses) if node not in graph])
+
+        course_order = []
+
+        while q:
+            node = q.popleft()
+            course_order.insert(0, node)
+
+            for parent in node_parent_map.get(node, set()):
+                graph[parent].remove(node)
+                if len(graph[parent]) == 0:
+                    q.append(parent)
+
+        if len(course_order) == numCourses:
+            return course_order
+        else:
+            return
+
+
 
 class BotUpSolution:
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
