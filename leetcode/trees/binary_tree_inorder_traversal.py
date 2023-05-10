@@ -5,7 +5,7 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+    def inorderTraversal(self, root) :
         res = []
         self.helper(root, res)
         return res
@@ -16,7 +16,7 @@ class Solution:
             res.append(root.val)
             self.helper(root.right, res)
 
-    def inorderTraversalIterative(self, root: Optional[TreeNode]) -> List[int]:
+    def inorderTraversalIterative(self, root):
         res = []
         stack = []
         while root or stack:
@@ -33,7 +33,7 @@ from collections import deque
 
 
 class Solution2:
-    def sortedListToBST(self, head: Optional[ListNode]) -> Optional[TreeNode]:
+    def sortedListToBST(self, head) :
         if not head:
             return None
 
@@ -66,4 +66,3 @@ class Solution2:
             root.val = val
             root = root.right
         return res
-

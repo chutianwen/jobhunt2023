@@ -41,7 +41,7 @@ def right_bound_inclusive(nums, target):
 
 
 nums = [1, 2, 4, 4, 4, 4, 4, 7, 9]
-target = 10
+target = 5
 
 left_bound_target_index, num_entry_small_than_target = left_bound_inclusive(nums, target)
 right_bound_target_index, num_entry_small_equal_than_target = right_bound_inclusive(nums, target)

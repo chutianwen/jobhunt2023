@@ -34,3 +34,7 @@ class Solution:
         # print(res)
         if visited != n: raise Exception("circle detected")
         return res[-1]
+
+
+
+

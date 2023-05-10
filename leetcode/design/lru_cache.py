@@ -60,3 +60,15 @@ class LRUCache:
 # obj = LRUCache(capacity)
 # param_1 = obj.get(key)
 # obj.put(key,value)
+
+from collections import OrderedDict
+a = OrderedDict()
+a[1] = 1
+a[2] = 2
+a[3] = 3
+print(a)
+print(a.move_to_end(2))
+print(a.popitem(last=False))
+print(a)
+print(a.popitem(last=False))
+print(a)

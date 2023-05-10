@@ -18,11 +18,32 @@ class Solution:
 
 
 class QuickSelectSolution(object):
+    def findKthLargestRecursion(self, nums, k):
+        end = len(nums)
+        lo = 0
+        hi = end - 1
+        target_index = end - k
+
+        def helper(start, end):
+            if start > end:
+                return None
+            partition = self.partition(nums, start, end)
+            if partition == target_index:
+                return nums[partition]
+            elif partition > target_index:
+                return helper(start, partition - 1)
+            else:
+                return helper(partition + 1, end)
+
+        res = helper(0, len(nums) - 1)
+        return res
+
     def findKthLargest(self, nums, k):
         end = len(nums)
         lo = 0
         hi = end - 1
         target_index = end - k
+
         while lo <= hi:
             partition = self.partition(nums, lo, hi)
             # print(f'partition:{nums[partition]}, nums:{nums}, target_index:{target_index}, partition:{partition}')
@@ -49,13 +70,16 @@ class QuickSelectSolution(object):
             if cur_lo > cur_hi:
                 break
             nums[cur_lo], nums[cur_hi] = nums[cur_hi], nums[cur_lo]
-        print(cur_lo, pivot)
+
+        # print(cur_lo, pivot)
         nums[cur_lo], nums[pivot] = nums[pivot], nums[cur_lo]
         return cur_lo
 
 
 s = QuickSelectSolution()
 
-nums = [1,2]
-res = s.partition(nums, 0, 1)
+nums = [1,2,3,4,5,6,7,8]
+res = s.findKthLargest(nums, 1)
 print(res, nums)
+res1 = s.findKthLargestRecursion(nums, 1)
+print(res1)
