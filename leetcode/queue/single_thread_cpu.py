@@ -3,40 +3,34 @@ import heapq
 
 class Solution:
     def getOrder(self, tasks: List[List[int]]) -> List[int]:
-        if not tasks:
-            return []
+        tasks_with_id = [(start, duration, task_id) for task_id, (start, duration) in enumerate(tasks)]
+        # sort based on start
+        tasks_with_id.sort(key=lambda entry: (entry[0], entry[1]))
 
-        task_with_ids = []
-        for task_id, task in enumerate(tasks):
-            task_start, task_duration = task
-            task_with_ids.append((task_start, task_duration, task_id))
+        buffer = []
+        processed_tasks = []
 
-        sorted_tasks = sorted(task_with_ids)
+        task_pointer = 0
+        time = 0
+        # print(f'tasks_with_id:{tasks_with_id}')
 
-        q = []
-        task_order = []
-        global_time = 0
-        global_idx = 0
-
-        while len(task_order) < len(tasks):
-            if len(q) == 0:
-                next_task_start, next_task_duration, next_task_id = sorted_tasks[global_idx]
-                global_idx += 1
-                global_time = next_task_start
-                heapq.heappush(q, (next_task_duration, next_task_id, next_task_start))
+        while len(processed_tasks) < len(tasks):
+            if not buffer:
+                start, duration, task_id = tasks_with_id[task_pointer]
+                time = start + duration
+                task_pointer += 1
             else:
-                cur_task_duration, cur_task_id, cur_task_start = heapq.heappop(q)
-                global_time += cur_task_duration
+                duration, task_id = heapq.heappop(buffer)
+                time += duration
 
-                task_order.append(cur_task_id)
+            processed_tasks.append(task_id)
+            while task_pointer <= len(tasks_with_id) - 1:
+                next_start, next_duration, next_task_id = tasks_with_id[task_pointer]
+                if next_start <= time:
+                    heapq.heappush(buffer, (next_duration, next_task_id))
+                    task_pointer += 1
+                else:
+                    break
 
-                # check children
-                while global_idx <= len(sorted_tasks) - 1:
-                    next_task_start, next_task_duration, next_task_id = sorted_tasks[global_idx]
-                    if next_task_start <= global_time:
-                        heapq.heappush(q, (next_task_duration, next_task_id, next_task_start))
-                        global_idx += 1
-                    else:
-                        break
+        return processed_tasks
 
-        return task_order
